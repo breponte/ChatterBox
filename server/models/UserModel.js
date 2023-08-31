@@ -1,26 +1,30 @@
 const mongoose = require('mongoose');       // import Mongoose to allow for 
                                             //      communication with mongo.db
+const MessageSchema = require('./MessageModel');
 
 /* template of entries in the Users collection (schema like schematic) */
 const UserSchema = new mongoose.Schema({
-    // CHECK DOCUMENTATION!!!
     name: {
         type: String,
         required: true,
+        trim: true,
     },
     username: {
         type: String,
         required: true,
+        unique: true,
+        trim: true,
     },
     password: {
         type: String,
         required: true,
+        trim: true,
     },
-    // messages: {
-    //     type: Array,
-    //     required: true,
-    // }
+    messages: {
+        type: [MessageSchema],
+        required: true,
+    }
 });
 
-const UserModel = mongoose.model('Users', UserSchema);
-module.exports = UserModel;
+const User = mongoose.model('User', UserSchema);
+module.exports = User;

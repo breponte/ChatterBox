@@ -1,0 +1,98 @@
+:root{
+    --top-bar-horizontal-padding: 30px;
+    --top-bar-vertical-padding: 15px;
+    --input-field-container-width: 30vw;
+    --input-field-container-height: 60vh;
+    --input-field-grid-row-start: 8;
+}
+
+.topbar-container {
+    background-color: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    margin-top: -10px;
+    margin-left: -8px;
+    margin-right: -8px;
+
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: minmax(25px, 50px);
+    align-items: center;
+    overflow: hidden;
+}
+
+.topbar-container .login {
+    background-color: rgb(177, 177, 177);
+    text-align: center;
+    font-size: 125%;
+    padding-left: var(--top-bar-horizontal-padding);
+    padding-right: var(--top-bar-horizontal-padding);
+    padding-top: var(--top-bar-vertical-padding);
+    padding-bottom: var(--top-bar-vertical-padding);
+    position: relative;
+    grid-column: 9 / 10;
+    border-style: inset;
+}
+
+.topbar-container .sign-up {
+    background-color: rgb(177, 177, 177);
+    text-align: center;
+    font-size: 125%;
+    padding-left: var(--top-bar-horizontal-padding);
+    padding-right: var(--top-bar-horizontal-padding);
+    padding-top: var(--top-bar-vertical-padding);
+    padding-bottom: var(--top-bar-vertical-padding);
+    position: relative;
+    grid-column: 10 / 11;
+    border-style: inset;
+}
+
+.topbar-container .login:hover, .topbar-container .sign-up:hover {
+    background-color: white;
+    font-size: 130%;
+    transition: 0.2s;
+    bottom: 5px;
+}
+
+.login-container,  .sign-up-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: calc(-1*(var(--input-field-container-width)/2));
+    margin-top: calc(-1*(var(--input-field-container-height)/2));
+    background-color: rgba(255, 255, 255, 0.4);
+    width: var(--input-field-container-width);
+    height: var(--input-field-container-height);
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.1);
+    border-width: 5pt;
+    border-radius: 5pt;
+
+    display: grid;
+    grid-template-columns: repeat(3, 10vw);
+    grid-template-rows: repeat(24, 2.5vh);
+}
+
+.login-container .username-text, .sign-up-container .username-text {
+    grid-column: 2 / 3;
+    grid-row: var(--input-field-grid-row-start) / calc(var(--input-field-grid-row-start) + 1);
+}
+
+.login-container .username-input, .sign-up-container .username-input {
+    grid-column: 2 / 3;
+    grid-row: calc(var(--input-field-grid-row-start) + 2) / calc(var(--input-field-grid-row-start) + 3);
+}
+
+.login-container .password-text, .sign-up-container .password-text {
+    grid-column: 2 / 3;
+    grid-row: calc(var(--input-field-grid-row-start) + 4) / calc(var(--input-field-grid-row-start) + 5);
+}
+
+.login-container .password-input, .sign-up-container .password-input{
+    grid-column: 2 / 3;
+    grid-row: calc(var(--input-field-grid-row-start) + 6) / calc(var(--input-field-grid-row-start) + 7);
+}
+
+.login-container .login-button, .sign-up-container .sign-up-button {
+    grid-column: 3 / 4;
+    grid-row: calc(var(--input-field-grid-row-start) + 8) / calc(var(--input-field-grid-row-start) + 9);
+}
