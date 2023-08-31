@@ -8,6 +8,20 @@ const User = require('../models/UserModel');  // reference User template
 /* ___GET_REQUESTS___*/
 
 /**
+ * Returns a user by username
+ * 
+ * NOTE: Does not work if placed after getById route
+ */
+router.route('/getUser').get( async (request, response) => {
+    const query = request.body;
+
+    User.find(query)
+        .then((user) => response.json(user))    // return data to frontend
+        .catch((error) => response.status(400)  // return error to frontend
+            .json('Error: ' + error));
+});
+
+/**
  * Returns ALL users
  * 
  * Model.find(query) will find all entries with the given query, in which you
@@ -20,20 +34,8 @@ const User = require('../models/UserModel');  // reference User template
  *      response - send information FROM backend TO frontend
  */
 router.route('/').get( async (request, response) => {
-    /* finds all entries in the users collection */
     User.find({})
-        .then((users) => response.json(users))    // return data to frontend
-        .catch((error) => response.status(400)  // return error to frontend
-            .json('Error: ' + error));
-});
-
-/**
- * Returns a user by ID
- */
-router.route('/:id').get( async (request, response) => {
-    /* finds all entries in the collection */
-    User.findById(request.params.id)
-        .then((user) => response.json(user))    // return data to frontend
+        .then((users) => response.json(users))  // return data to frontend
         .catch((error) => response.status(400)  // return error to frontend
             .json('Error: ' + error));
 });
@@ -59,6 +61,20 @@ router.route('/addUser').post( async (request, response) => {
                                                 //      using given information
     newUser.save()                              // saves to backend
         .then(() => response.json(newUser))     // confirmation to frontend
+        .catch((error) => response.status(400)  // return error to frontend
+            .json('Error: ' + error));
+});
+
+
+
+/* ___FOR_FUN___ */
+
+/**
+ * Returns a user by ID (for fun?)
+ */
+router.route('/:id').get( async (request, response) => {
+    User.findById(request.params.id)
+        .then((user) => response.json(user))    // return data to frontend
         .catch((error) => response.status(400)  // return error to frontend
             .json('Error: ' + error));
 });
