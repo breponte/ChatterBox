@@ -1,9 +1,9 @@
 /* ___SETUP___ */
 
 const router = require('express').Router();     // retrieves current route
-const MessageModel = 
-    require('../models/MessageModel');         // reference Messages template
-const UserModel =                               // reference User template
+const { Message } = 
+    require('../models/MessageModel');          // reference Messages template
+const User =                                    // reference User template
     require('../models/UserModel');
 
 
@@ -12,11 +12,11 @@ const UserModel =                               // reference User template
 /**
  * Returns ALL messages by given user
  */
-router.route('/').get((request, response) => {
+router.route('/getUsersMessages').get((request, response) => {
     const query = { username: request.body.username };
 
     /* queries by username, then sends messages under user to frontend */
-    UserModel.find(query)
+    User.findOne(query)
         .then((user) => {
                 response.json(user.messages);   // all messages to frontend
             })
@@ -33,10 +33,10 @@ router.route('/').get((request, response) => {
  */
 router.route('/addMessage').post( async (request, response) => {
     const query = { username: request.body.username };
-    const newMessage = new MessageModel(request.body);
+    const newMessage = new Message(request.body);
 
     /* queries by username, then sends confirmation to frontend */
-    UserModel.find(query)
+    User.findOne(query)
         .then((user) => {
                 user.messages.push(newMessage); // add new message
                 user.save();                    // save changes

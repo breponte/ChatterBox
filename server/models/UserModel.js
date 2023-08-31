@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');       // import Mongoose to allow for 
                                             //      communication with mongo.db
-const MessageSchema = require('./MessageModel');
+const { MessageSchema } = require('./MessageModel');
 
 /* template of entries in the Users collection (schema like schematic) */
 const UserSchema = new mongoose.Schema({
