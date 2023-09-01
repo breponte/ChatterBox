@@ -50,7 +50,7 @@
     background-color: white;
     font-size: 130%;
     transition: 0.2s;
-    bottom: 5px;
+    bottom: 1px;
 }
 
 .login-container,  .sign-up-container {
@@ -74,25 +74,30 @@
 
 .login-container .username-text, .sign-up-container .username-text {
     grid-column: 2 / 3;
-    grid-row: var(--input-field-grid-row-start) / calc(var(--input-field-grid-row-start) + 1);
+    grid-row: var(--input-field-grid-row-start) 
+        / calc(var(--input-field-grid-row-start) + 1);
 }
 
 .login-container .username-input, .sign-up-container .username-input {
     grid-column: 2 / 3;
-    grid-row: calc(var(--input-field-grid-row-start) + 2) / calc(var(--input-field-grid-row-start) + 3);
+    grid-row: calc(var(--input-field-grid-row-start) + 2) 
+        / calc(var(--input-field-grid-row-start) + 3);
 }
 
 .login-container .password-text, .sign-up-container .password-text {
     grid-column: 2 / 3;
-    grid-row: calc(var(--input-field-grid-row-start) + 4) / calc(var(--input-field-grid-row-start) + 5);
+    grid-row: calc(var(--input-field-grid-row-start) + 4) 
+        / calc(var(--input-field-grid-row-start) + 5);
 }
 
 .login-container .password-input, .sign-up-container .password-input{
     grid-column: 2 / 3;
-    grid-row: calc(var(--input-field-grid-row-start) + 6) / calc(var(--input-field-grid-row-start) + 7);
+    grid-row: calc(var(--input-field-grid-row-start) + 6) 
+        / calc(var(--input-field-grid-row-start) + 7);
 }
 
 .login-container .login-button, .sign-up-container .sign-up-button {
     grid-column: 3 / 4;
-    grid-row: calc(var(--input-field-grid-row-start) + 8) / calc(var(--input-field-grid-row-start) + 9);
+    grid-row: calc(var(--input-field-grid-row-start) + 8) 
+        / calc(var(--input-field-grid-row-start) + 9);
 }

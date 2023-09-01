@@ -6,7 +6,7 @@ const { MessageSchema } = require('./MessageModel');
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        required: false,
         trim: true,
     },
     username: {

@@ -12,6 +12,7 @@ const mongoose = require('mongoose')            // import Mongoose to allow for
 const cors = require('cors');                   // allows connection to React.js
 const port = process.env.PORT || 3001           // port to our server
 
+app.use(cors());                                // allows connection to React.js
 app.use(express.json());                        // parses JSON to object
 
 mongoose.connect(
@@ -31,8 +32,7 @@ mongoose.connect(
  * Second argument is a callback function that runs on bootup
  */
 app.listen(port, () => {
-    console.log('SERVER IS RUNNING!');
-    console.log('HOORAY');
+    console.log(`SERVER IS RUNNING AT: ${port}`);
 });
 
 /* ___ROUTERS___ */
