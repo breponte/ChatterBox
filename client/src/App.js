@@ -197,17 +197,19 @@ const App = () => {
           }
         </> : /* logged in */ <>
           <h1 id='greeting'>Welcome, {usernameLogin}!</h1>
-          <input id='messageInput' onChange={(event) => {
-            setmessageInput(event.target.value);
-          }} placeholder='Send a message to everyone' value={messageInput}>
-          </input>
-          <button onClick={async (event) => {
-            // check if anything was even typed (spaces alone don't count)
-            if (messageInput.trim()) {
-              await addMessage();
-              alert('Sent message');
-            }
-          }}>Send Message</button>
+          <section id='inputMessaging'>
+            <textarea id='messageInput' contenteditable onChange={(event) => {
+              setmessageInput(event.target.value);
+            }} placeholder='Send a message to everyone' value={messageInput}>
+            </textarea>
+            <button onClick={async (event) => {
+              // check if anything was even typed (spaces alone don't count)
+              if (messageInput.trim()) {
+                await addMessage();
+                alert('Sent message');
+              }
+            }}>Send Message</button>
+          </section>
           <section className='messageDisplay'>
             {listOfMessages.map((message) => {
                 let dateCreated = new Date(message.createdAt);

@@ -110,4 +110,19 @@
 .message {
     background-color: rgba(255, 255, 255, 0.5);
     display: block;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: rgba(255, 255, 255, 0.2);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#messageInput {
+    min-width: 20vw;
+    max-width: 50vw;
+    min-height: 1.09em;
+    max-height: 50vh;
 }
