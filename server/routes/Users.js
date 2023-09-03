@@ -12,10 +12,10 @@ const User = require('../models/UserModel');  // reference User template
  * 
  * NOTE: Does not work if placed after getById route
  */
-router.route('/getUser').get( async (request, response) => {
-    const query = { username: request.body.username };
+router.route('/getUser/:username').get( async (request, response) => {
+    const query = { username: request.params.username };
 
-    User.find(query)
+    User.findOne(query)
         .then((user) => response.json(user))    // return data to frontend
         .catch((error) => response.status(400)  // return error to frontend
             .json('Error: ' + error));

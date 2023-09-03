@@ -20,7 +20,7 @@
     overflow: hidden;
 }
 
-.topbar-container .login {
+.topbar-container #login-button {
     background-color: rgb(177, 177, 177);
     text-align: center;
     font-size: 125%;
@@ -33,7 +33,7 @@
     border-style: inset;
 }
 
-.topbar-container .sign-up {
+.topbar-container #sign-up-button {
     background-color: rgb(177, 177, 177);
     text-align: center;
     font-size: 125%;
@@ -46,14 +46,14 @@
     border-style: inset;
 }
 
-.topbar-container .login:hover, .topbar-container .sign-up:hover {
+.topbar-container #login-button:hover, .topbar-container #sign-up-button:hover {
     background-color: white;
     font-size: 130%;
     transition: 0.2s;
     bottom: 1px;
 }
 
-.login-container,  .sign-up-container {
+#login-container,  #sign-up-container {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -72,32 +72,42 @@
     grid-template-rows: repeat(24, 2.5vh);
 }
 
-.login-container .username-text, .sign-up-container .username-text {
+#login-container #username-text, #sign-up-container #username-text {
     grid-column: 2 / 3;
     grid-row: var(--input-field-grid-row-start) 
         / calc(var(--input-field-grid-row-start) + 1);
 }
 
-.login-container .username-input, .sign-up-container .username-input {
+#login-container #username-input, #sign-up-container #username-input {
     grid-column: 2 / 3;
     grid-row: calc(var(--input-field-grid-row-start) + 2) 
         / calc(var(--input-field-grid-row-start) + 3);
 }
 
-.login-container .password-text, .sign-up-container .password-text {
+#login-container #password-text, #sign-up-container #password-text {
     grid-column: 2 / 3;
     grid-row: calc(var(--input-field-grid-row-start) + 4) 
         / calc(var(--input-field-grid-row-start) + 5);
 }
 
-.login-container .password-input, .sign-up-container .password-input{
+#login-container #password-input, #sign-up-container #password-input{
     grid-column: 2 / 3;
     grid-row: calc(var(--input-field-grid-row-start) + 6) 
         / calc(var(--input-field-grid-row-start) + 7);
 }
 
-.login-container .login-button, .sign-up-container .sign-up-button {
+#login-container #login-button, #sign-up-container #sign-up-button {
     grid-column: 3 / 4;
     grid-row: calc(var(--input-field-grid-row-start) + 8) 
         / calc(var(--input-field-grid-row-start) + 9);
+}
+
+#greeting {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.message {
+    background-color: rgba(255, 255, 255, 0.5);
+    display: block;
 }
