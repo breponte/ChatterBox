@@ -1,6 +1,31 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 
+const dateSettings = {
+  weekday:"long", 
+  year:"numeric", 
+  month:"short", 
+  day:"numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false,
+};
+
+/**
+ * Order dates by their time created
+ * @param {Object} message1 - first message
+ * @param {Object} message2 - second message
+ * @returns 
+ */
+const compareMessages = (message1, message2) => {
+  const date1 = new Date(message1.createdAt).getTime();
+  const date2 = new Date(message2.createdAt).getTime();
+
+  if (date1 <= date2) return -1;
+  else if (date1 > date2) return 1;
+} 
+
 const App = () => {
   const [showLogin, setShowLogin] = useState(true);
   const [usernameLogin, setUsernameLogin] = useState('');
@@ -8,7 +33,8 @@ const App = () => {
   const [usernameSignUp, setUsernameSignUp] = useState('');
   const [passwordSignUp, setPasswordSignUp] = useState('');
   const [logged, setLogged] = useState(false);
-  const [listOfUsers, setListOfUsers] = useState([]);
+  const [listOfMessages, setListOfMessages] = useState([]);
+  const [messageInput, setmessageInput] = useState('');
 
   useEffect(() => {
     setUsernameLogin('');
@@ -19,11 +45,15 @@ const App = () => {
 
   useEffect(() => {
     getAllUsers()
-      .then((allUsers) => {setListOfUsers(allUsers)})
+      .then((allUsers) => {
+        let combinedArray = [];
+        allUsers.forEach((user) => {
+          combinedArray = combinedArray.concat(user.messages);
+        });
+        setListOfMessages(combinedArray.sort(compareMessages));
+      })
       .catch((error) => {console.error('Error: ' + error)});
-  }, [logged]);
-
-
+  }, []);
 
   /**
    * Creates a new user in mongo with the inputted sign up username and password
@@ -51,6 +81,30 @@ const App = () => {
   }
 
   /**
+   * Creates a new user in mongo with the inputted sign up username and password
+   * @returns the created object
+   */
+  const addMessage = async () => {
+    return await fetch(`http://localhost:3001/messages/addMessage`, {
+      method: 'POST',
+      body: JSON.stringify({
+        username: usernameLogin,
+        content: messageInput,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+      .then(async (response) => {
+        const result = await response.json();
+        console.log(JSON.stringify(result));
+        setListOfMessages([...listOfMessages, result].sort(compareMessages));
+        return result;
+      })
+      .catch((error) => {console.error('Error: ' + error)})
+  }
+
+  /**
    * Requests a user with the matching username as login's and return it
    * @returns the requested object with the matching username
    */
@@ -70,8 +124,8 @@ const App = () => {
   }
 
   /**
-   * Requests a user with the matching username as login's and return it
-   * @returns the requested object with the matching username
+   * Requests all users
+   * @returns the requested array of all users
    */
   const getAllUsers = async () => {
     return await fetch(`http://localhost:3001/users/`, {
@@ -92,18 +146,16 @@ const App = () => {
 
   return (
     <div className='App'>
-      <section className='topbar-container'>
-        <p id='login-button' onClick={() => {
-          setShowLogin(true);
-        }}>Login</p>
-        <p id='sign-up-button' onClick={() => {
-          setShowLogin(false);
-        }}>Sign up</p>
-      </section>
-
-
       {
         !logged ? /* login/sign up */ <>
+          <section className='topbar-container'>
+            <p id='login-button' onClick={() => {
+              setShowLogin(true);
+            }}>Login</p>
+            <p id='sign-up-button' onClick={() => {
+              setShowLogin(false);
+            }}>Sign up</p>
+          </section>
           {
             showLogin ? /* login prompt */ <>
             <section id='login-container'>
@@ -145,31 +197,32 @@ const App = () => {
           }
         </> : /* logged in */ <>
           <h1 id='greeting'>Welcome, {usernameLogin}!</h1>
+          <input id='messageInput' onChange={(event) => {
+            setmessageInput(event.target.value);
+          }} placeholder='Send a message to everyone' value={messageInput}>
+          </input>
+          <button onClick={async (event) => {
+            // check if anything was even typed (spaces alone don't count)
+            if (messageInput.trim()) {
+              await addMessage();
+              alert('Sent message');
+            }
+          }}>Send Message</button>
           <section className='messageDisplay'>
-            {listOfUsers.map((user) => {
-              const messages = user.messages;
-              return (messages.map((message) => {
-                const dateCreated = new Date(message.createdAt);
+            {listOfMessages.map((message) => {
+                let dateCreated = new Date(message.createdAt);
+                if (!(dateCreated instanceof Date) || isNaN(dateCreated)) {
+                  dateCreated = new Date();
+                }
                 return (
                   <div className='message'>
                     <h3>User: {message.username}</h3>
                     <h3>Message: {message.content}</h3>
-                    <p>Sent: {dateCreated.toLocaleDateString('en-us', 
-                        {
-                          weekday:"long", 
-                          year:"numeric", 
-                          month:"short", 
-                          day:"numeric",
-                          hour: "2-digit",
-                          minute: "2-digit",
-                          second: "2-digit",
-                          hour12: false,
-                        }
-                      )}
+                    <p>Sent: {dateCreated.toLocaleDateString(
+                      'en-us', dateSettings)}
                     </p>
                   </div>
                 );
-              }));
             })}
           </section>
         </>

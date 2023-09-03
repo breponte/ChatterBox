@@ -12,8 +12,8 @@ const User =                                    // reference User template
 /**
  * Returns ALL messages by given user
  */
-router.route('/getUsersMessages').get((request, response) => {
-    const query = { username: request.body.username };
+router.route('/getUsersMessages/:username').get((request, response) => {
+    const query = { username: request.params.username };
 
     /* queries by username, then sends messages under user to frontend */
     User.findOne(query)
